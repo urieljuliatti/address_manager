@@ -1,20 +1,21 @@
 require 'google/apis/civicinfo_v2'
 
 module Legislator
+ 
   def legislators_by_zipcode(zip)
     civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
     civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
-  
+ 
     begin
       legislators = civic_info.representative_info_by_address(
         address: zip,
         levels: 'country',
-        roles: ['legislatorUpperBody', 'legislatorLowerBody']
+        roles: %w[legislatorUpperBody legislatorLowerBody]
       )
       legislators = legislators.officials
       legislator_names = legislators.map(&:name)
-      legislator_names.join(", ")
-    rescue
+      legislator_names.join(', ')
+    rescue StandardError
       'You can find your representatives by visiting www.commoncause.org/take-action/find-elected-officials'
     end
   end
