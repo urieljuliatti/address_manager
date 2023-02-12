@@ -1,10 +1,12 @@
 require 'csv'
 require_relative 'modules/clean_zipcode'
+require_relative 'modules/legislator'
 
 puts 'EventManager initialized.'
 
 class EventManager
   include CleanZipcode
+  include Legislator
 
   attr_accessor :csv_file
 
@@ -25,7 +27,8 @@ class EventManager
     contents.each do |row|
       name = row[:first_name]
       zipcode = clean(row[:zipcode])
-      puts "Name: #{name} | Zipcode: #{zipcode}"
+      legislators = legislators_by_zipcode(zipcode)
+      puts "Name: #{name} | Zipcode: #{zipcode}  | Legislator: #{legislators}"
     end
   end
 end
