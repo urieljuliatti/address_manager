@@ -1,11 +1,11 @@
 require 'google/apis/civicinfo_v2'
 
 module Legislator
- 
+
   def legislators_by_zipcode(zip)
     civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
     civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
- 
+
     begin
       legislators = civic_info.representative_info_by_address(
         address: zip,
