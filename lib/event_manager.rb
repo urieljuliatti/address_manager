@@ -3,6 +3,7 @@ require 'erb'
 require_relative 'modules/clean_zipcode'
 require_relative 'modules/legislator'
 require_relative 'modules/form_letter'
+require_relative 'template'
 
 puts 'EventManager initialized.'
 
@@ -26,8 +27,7 @@ class EventManager
   end
 
   def display
-    template_letter = File.read('form_letter.erb')
-    erb_template = ERB.new template_letter
+    erb_template = Template.new('form_letter.erb').erb_template
 
     contents.each do |row|
       id = row[0]
