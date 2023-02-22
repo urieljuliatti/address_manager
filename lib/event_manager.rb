@@ -36,9 +36,8 @@ class EventManager
       name = row[:first_name]
       zipcode = clean(row[:zipcode])
       phone_number = phone_number_parser(row[:homephone])
-      p phone_number
       legislators = legislators_by_zipcode(zipcode)
-      puts "Name: #{name} | Zipcode: #{zipcode}  | Legislator: #{legislators}"
+      puts "Name: #{name} | Zipcode: #{zipcode}  | Legislator: #{legislators} | Phone Number: #{phone_number}"
 
       form_letter = erb_template.result(binding)
 
