@@ -1,6 +1,7 @@
 require 'csv'
 require 'erb'
 require_relative 'modules/clean_zipcode'
+require_relative 'modules/clean_phone'
 require_relative 'modules/legislator'
 require_relative 'modules/form_letter'
 require_relative 'template'
@@ -11,6 +12,7 @@ class EventManager
   include CleanZipcode
   include Legislator
   include FormLetter
+  include CleanPhone
   attr_accessor :csv_file
 
   def initialize(filepath)
@@ -33,12 +35,14 @@ class EventManager
       id = row[0]
       name = row[:first_name]
       zipcode = clean(row[:zipcode])
+      phone_number = phone_number_parser(row[:homephone])
+      p phone_number
       legislators = legislators_by_zipcode(zipcode)
       puts "Name: #{name} | Zipcode: #{zipcode}  | Legislator: #{legislators}"
 
       form_letter = erb_template.result(binding)
 
-      save_thank_you_letter(id, form_letter)
+      # save_thank_you_letter(id, form_letter)
     end
   end
 end
